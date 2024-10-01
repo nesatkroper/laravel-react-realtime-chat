@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/config/axiosInstance";
-import { getUser } from "@/app/user/userSlice";
+import { getUser } from "@/app/reducer/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const Bio = () => {

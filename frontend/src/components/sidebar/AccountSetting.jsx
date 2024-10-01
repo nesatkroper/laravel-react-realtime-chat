@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { AtSign, CalendarDays, CircleUser, Phone } from "lucide-react";
-import { getUser } from "@/app/user/userSlice";
+import { getUser } from "@/app/reducer/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Name from "@/components/setting/account/Name";

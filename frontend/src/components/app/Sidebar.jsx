@@ -5,7 +5,7 @@ import { AlignJustify } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Logout from "@/components/sidebar/Logout";
 import ProfileButtonList from "@/components/sidebar/ProfileButtonList";
-import { getUser } from "@/app/user/userSlice";
+import { getUser } from "@/app/reducer/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const Sidebar = () => {

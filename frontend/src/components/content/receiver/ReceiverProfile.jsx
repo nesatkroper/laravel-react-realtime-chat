@@ -17,7 +17,7 @@ import {
   Users,
 } from "lucide-react";
 import AlertBlock from "../AlertBlock";
-import { getUser } from "@/app/user/userSlice";
+import { getUser } from "@/app/reducer/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const ReceiverProfile = () => {

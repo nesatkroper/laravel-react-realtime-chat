@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { getUser } from "@/app/user/userSlice";
+import { getUser } from "@/app/reducer/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/config/axiosInstance";

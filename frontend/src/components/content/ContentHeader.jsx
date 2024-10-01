@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import ReceiverProfile from "./receiver/ReceiverProfile.jsx";
 import ReceiverOption from "./receiver/ReceiverOption.jsx";
-import { getUser } from "@/app/user/userSlice";
+import { getUser } from "@/app/reducer/userSlice.jsx";
 import { useSelector, useDispatch } from "react-redux";
 
 const ContentHeader = () => {

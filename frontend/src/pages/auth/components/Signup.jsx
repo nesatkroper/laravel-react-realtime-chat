@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -12,6 +13,9 @@ const Signup = () => {
   const [show, setShow] = useState(false);
   const { setToken } = useAuth();
   const navigate = useNavigate();
+  const [err, setErr] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [c_password, setCPassword] = useState("");
   const [auth, setAuth] = useState({
     name: "",
     gender: "male",
@@ -26,24 +30,31 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axiosInstance.post("/register", {
-        name: auth.name[0],
-        gender: auth.gender[0],
-        username: auth.username[0],
-        email: auth.email[0],
-        password: auth.password[0],
-      });
 
-      console.log(response);
+    if (auth.password != c_password) {
+      setErr(true);
+      setMsg("Password is incorrect");
+    } else {
+      try {
+        const response = await axiosInstance.post("/register", {
+          name: auth.name[0],
+          gender: auth.gender[0],
+          username: auth.username[0],
+          email: auth.email[0],
+          password: auth.password[0],
+        });
 
-      if (response.data.status) {
-        setToken(response.data.token);
-        localStorage.setItem("id", response.data.user.usr_id);
-        navigate("/", { replace: true });
+        if (response.data.status) {
+          setToken(response.data.token);
+          localStorage.setItem("id", response.data.user.usr_id);
+          navigate("/", { replace: true });
+        } else {
+          setErr(true);
+          setMsg(response.data.message);
+        }
+      } catch (e) {
+        console.log(e);
       }
-    } catch (e) {
-      console.log(e);
     }
   };
 
@@ -53,14 +64,22 @@ const Signup = () => {
 
   return (
     <React.Fragment>
+      {err ? (
+        <Alert className="text-red-700 bg-red-100">
+          <AlertTitle>Error Alert</AlertTitle>
+          <AlertDescription>{msg}</AlertDescription>
+        </Alert>
+      ) : (
+        ""
+      )}
       <form onSubmit={handleSubmit}>
         <div className="grid w-full max-w-sm items-center gap-1.5 my-4">
-          <p className="border text-center rounded-xl h-10 flex items-center justify-center font-bold text-red-600">
-            Email is already created
-          </p>
           <Label htmlFor="name">Name*</Label>
           <Input
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => {
+              handleChange(e);
+              setErr(false);
+            }}
             type="text"
             name="name"
             placeholder="Jonh Cena"
@@ -95,7 +114,10 @@ const Signup = () => {
         <div className="grid w-full max-w-sm items-center gap-1.5 my-4">
           <Label htmlFor="username">Username*</Label>
           <Input
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => {
+              handleChange(e);
+              setErr(false);
+            }}
             type="text"
             name="username"
             placeholder="@jonhcena"
@@ -105,7 +127,10 @@ const Signup = () => {
         <div className="grid w-full max-w-sm items-center gap-1.5 my-4">
           <Label htmlFor="email">Email*</Label>
           <Input
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => {
+              handleChange(e);
+              setErr(false);
+            }}
             type="email"
             name="email"
             placeholder="jonhcena@example.com"
@@ -115,9 +140,25 @@ const Signup = () => {
         <div className="grid w-full max-w-sm items-center gap-1.5 mb-2">
           <Label htmlFor="password">Password*</Label>
           <Input
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => {
+              handleChange(e);
+              setErr(false);
+            }}
             type={show ? "text" : "password"}
             name="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div className="grid w-full max-w-sm items-center gap-1.5 mb-2">
+          <Label htmlFor="password">Confirm Password*</Label>
+          <Input
+            onChange={(e) => {
+              setCPassword(e.target.value);
+              setErr(false);
+            }}
+            type={show ? "text" : "password"}
+            name="c_password"
             placeholder="Password"
             required
           />

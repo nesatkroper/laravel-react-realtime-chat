@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -11,6 +12,8 @@ const Signin = () => {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const { setToken } = useAuth();
+  const [err, setErr] = useState(false);
+  const [msg, setMsg] = useState("");
   const [auth, setAuth] = useState({
     username: "",
     password: "",
@@ -40,7 +43,10 @@ const Signin = () => {
         localStorage.setItem("baseUrl", "http://localhost:8000/");
         localStorage.setItem("id", response.data.user.usr_id);
         navigate("/", { replace: true });
-      } else alert("error");
+      } else {
+        setErr(true);
+        setMsg(response.data.message);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -48,11 +54,22 @@ const Signin = () => {
 
   return (
     <React.Fragment>
+      {err ? (
+        <Alert className="text-red-700 bg-red-100">
+          <AlertTitle>Error Alert</AlertTitle>
+          <AlertDescription>{msg}</AlertDescription>
+        </Alert>
+      ) : (
+        ""
+      )}
       <form onSubmit={handleSubmit}>
         <div className="grid w-full max-w-sm items-center gap-1.5 my-4">
           <Label htmlFor="username">Username</Label>
           <Input
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => {
+              handleChange(e);
+              setErr(false);
+            }}
             type="text"
             name="username"
             placeholder="Username"
