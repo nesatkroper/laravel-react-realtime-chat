@@ -23,8 +23,13 @@ class Contact extends Model
         'status'
     ];
 
-    public function users()
+    public function member()
     {
         return $this->hasMany(User::class, 'usr_id', 'member');
+    }
+
+    public function creator()
+    {
+        return $this->hasMany(User::class, 'usr_id', 'creator');
     }
 }

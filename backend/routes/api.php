@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // 
     Route::prefix('/message')->group(function () {
         Route::controller(MessageController::class)->group(function () {
-            Route::get('/{creator}', 'getMessage');
+            Route::get('/{creator}/{member}', 'getMessage');
             Route::post('/', 'createMessage');
         });
     });

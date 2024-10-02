@@ -24,6 +24,6 @@ class Message extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class, 'usr_id', 'member');
+        return $this->hasOne(User::class, 'usr_id', 'creator');
     }
 }

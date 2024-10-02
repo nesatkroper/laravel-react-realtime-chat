@@ -11,7 +11,19 @@ class ContactController extends Controller
     public function getContact($creator)
     {
         try {
-            $contact = Contact::where('creator', '=', $creator)->with('users')->get();
+            // $contact = Contact::where('creator', '=', $creator)->with('member')->get();
+            $find = Contact::where('creator', '=', $creator)
+                ->orWhere('member', '=', $creator)
+                ->get();
+
+            $contact = null;
+            if ($find[0]->creator == $creator) {
+                $contact = Contact::where('creator', $creator)->with('member')->get();
+            } else {
+                $contact = Contact::where('member', $creator)->with('creator')->get();
+            }
+
+
             if ($contact) {
                 return response()->json([
                     'data' => $contact,

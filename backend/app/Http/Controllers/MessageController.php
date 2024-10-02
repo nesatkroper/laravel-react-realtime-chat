@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class MessageController extends Controller
 {
 
-    public function getMessage($creator)
+    public function getMessage($creator, $member)
     {
         try {
-            $messge = Message::where('creator', '=', $creator)->with('users')->get();
+            $messge = Message::where('creator', '=', $creator)->where('member', '=', $member)->with('users')->get();
             if ($messge != '[]') {
                 return response()->json([
                     'data' => $messge,
