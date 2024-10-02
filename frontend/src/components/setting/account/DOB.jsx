@@ -18,14 +18,37 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import axiosInstance from "@/config/axiosInstance";
+import { getUser } from "@/app/reducer/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const DOB = () => {
-  useEffect(() => {}, []);
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state?.user);
   const [date, setDate] = useState();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await axiosInstance.post("/user/dob", {
+        id: users.usr_id,
+        dob: date,
+      });
+      dispatch(getUser);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getUser());
+    setDate(users.dob);
+  }, []);
   return (
     <>
       <AlertDialogContent className="w-[350px]">
-        <form onSubmit="">
+        <form onSubmit={handleSubmit}>
           <AlertDialogHeader>
             <AlertDialogTitle className="mb-3">
               Edit you username

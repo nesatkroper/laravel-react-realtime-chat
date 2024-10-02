@@ -5,22 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Message extends Model
 {
     use HasFactory;
 
-    protected $table = 'contacts';
+    protected  $table = 'messages';
 
-    protected $guarded = 'con_id';
+    protected $guarded = 'msg_id';
 
-    protected $primaryKey = 'con_id';
+    protected $primaryKey = "msg_id";
 
     protected $fillable = [
         'creator',
         'member',
-        'name',
-        'phone',
-        'status'
+        'message',
+        'photo'
     ];
 
     public function users()

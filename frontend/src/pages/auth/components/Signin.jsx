@@ -36,8 +36,6 @@ const Signin = () => {
         password: auth.password[0],
       });
 
-      console.log(response);
-
       if (response.data.status === true) {
         setToken(response.data.token);
         localStorage.setItem("baseUrl", "http://localhost:8000/");

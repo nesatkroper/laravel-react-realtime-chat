@@ -1,22 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "@/config/axiosInstance";
 
-export const getContact = createAsyncThunk("getContact", async (creator) => {
+const creator = localStorage.getItem("id");
+
+export const getContact = createAsyncThunk("getContact", async () => {
   const response = await axiosInstance.get(`/contact/${creator}}`);
-  return response.data;
+  return response.data.data;
 });
 
 export const getOnlyContact = createAsyncThunk(
-  "getContact",
-  async (creator, member) => {
+  "getOnlyContact",
+  async (member) => {
     const response = await axiosInstance.get(`/contact/${creator}/${member}`);
-    return response.data;
+    return response.data.data;
   }
 );
 
 export const addContact = createAsyncThunk("addContact", async (newContact) => {
   const response = await axiosInstance.post("/contact", newContact);
-  return response.data;
+  return response.data.data;
 });
 
 // export const updateItem = createAsyncThunk("items/updateItem", async (item) => {
@@ -38,9 +40,9 @@ const contactSlice = createSlice({
       .addCase(getContact.fulfilled, (state, action) => {
         return action.payload;
       })
-      .addCase(getOnlyContact.fulfilled, (state, action) => {
-        return action.payload;
-      })
+      // .addCase(getOnlyContact.fulfilled, (state, action) => {
+      //   return action.payload;
+      // })
       .addCase(addContact.fulfilled, (state, action) => {
         state.push(action.payload);
       });

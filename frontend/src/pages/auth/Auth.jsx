@@ -7,7 +7,7 @@ const Auth = () => {
   return (
     <div className="flex items-center justify-center h-[100vh]">
       <Card>
-        <CardContent className="w-[400px] p-0 shadow-xl">
+        <CardContent className="w-[400px] p-0 shadow-2xl">
           <Tabs
             defaultValue="signin"
             className="w-full flex  flex-col justify-center"

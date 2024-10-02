@@ -12,7 +12,7 @@ import {
 const AlertBlock = () => {
   return (
     <React.Fragment>
-      <AlertDialogContent>
+      <AlertDialogContent className="w-[300px]">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>

@@ -27,7 +27,8 @@ class User extends Authenticatable
         'password',
         'phone',
         'photo',
-        'bio'
+        'bio',
+        'dob ',
     ];
 
     /**
@@ -51,5 +52,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function contacts()
+    {
+        return $this->belongsTo(Contact::class, 'usr_id');
+    }
+
+    public function messages()
+    {
+        return $this->belongsTo(Message::class, 'usr_id');
     }
 }

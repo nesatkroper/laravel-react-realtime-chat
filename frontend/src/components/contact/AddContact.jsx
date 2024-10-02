@@ -11,11 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axiosInstance from "@/config/axiosInstance";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addContact } from "@/app/reducer/contactSlice";
 
 export const AddContact = () => {
-  const store = useSelector((state) => state.user?.data);
+  const dispatch = useDispatch();
+  const store = useSelector((state) => state?.user);
   const [contact, setContact] = useState({
     name: "",
     phone: "",
@@ -25,15 +26,20 @@ export const AddContact = () => {
     setContact({ ...contact, [e.target.name]: [e.target.value] });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const res = await axiosInstance.post("contact", {
-      creator: store.usr_id,
-      name: contact.name[0],
-      phone: contact.phone[0],
-    });
-    console.log(res);
+    try {
+      dispatch(
+        addContact({
+          creator: store.usr_id,
+          name: contact.name[0],
+          phone: contact.phone[0],
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <React.Fragment>

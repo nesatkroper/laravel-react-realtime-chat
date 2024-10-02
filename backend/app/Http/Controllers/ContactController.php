@@ -11,7 +11,7 @@ class ContactController extends Controller
     public function getContact($creator)
     {
         try {
-            $contact = Contact::where('creator', '=', $creator)->get();
+            $contact = Contact::where('creator', '=', $creator)->with('users')->get();
             if ($contact) {
                 return response()->json([
                     'data' => $contact,
@@ -31,15 +31,22 @@ class ContactController extends Controller
             ]);
         }
     }
-    public function getOnlyContact($id)
+    public function getOnlyContact($creator, $member)
     {
         try {
-            $contact = Contact::findOrFail($id);
-            return response()->json([
-                'data' => $contact,
-                'status' => true,
-                'message' => 'Contact get successful'
-            ]);
+            $contact = Contact::where('creator', '=', $creator)->where('member', '=', $member)->with('users')->get();
+            if ($contact) {
+                return response()->json([
+                    'data' => $contact,
+                    'status' => true,
+                    'message' => 'Contact get successfully'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'No Data Found'
+                ]);
+            }
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,

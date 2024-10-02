@@ -45,7 +45,6 @@ const Name = () => {
                 }}
                 value={name}
                 type="text"
-                id="name"
                 placeholder="Jonh Cena"
               />
             </div>

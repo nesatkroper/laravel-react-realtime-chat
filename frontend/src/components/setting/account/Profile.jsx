@@ -30,16 +30,15 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    getUser;
-    await axiosInstance
-      .post("/user/photo", {
+    try {
+      await axiosInstance.post("/user/photo", {
         id: users.usr_id,
         photo: image,
-      })
-      .catch((err) => {
-        console.log(err);
       });
-    dispatch(getUser());
+      dispatch(getUser());
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {

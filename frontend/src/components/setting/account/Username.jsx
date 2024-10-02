@@ -44,9 +44,8 @@ const Username = () => {
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
-                value={username}
+                value={users.username}
                 type="text"
-                id="email"
                 placeholder="@jonhcena"
               />
             </div>

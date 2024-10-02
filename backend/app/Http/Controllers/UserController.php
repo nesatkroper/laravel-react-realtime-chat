@@ -28,6 +28,7 @@ class UserController extends Controller
             ]);
         }
     }
+
     public function editName(Request $request)
     {
         try {
@@ -48,6 +49,7 @@ class UserController extends Controller
             ]);
         }
     }
+
     public function editUsername(Request $request)
     {
         try {
@@ -68,6 +70,7 @@ class UserController extends Controller
             ]);
         }
     }
+
     public function editPhone(Request $request)
     {
         try {
@@ -88,6 +91,7 @@ class UserController extends Controller
             ]);
         }
     }
+
     public function editProfile(Request $request)
     {
         try {
@@ -111,6 +115,27 @@ class UserController extends Controller
                 ]);
             }
 
+            return response()->json([
+                'status' => true,
+                'data' => $edit,
+                'message' => "Successfully"
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function editDOB(Request $request)
+    {
+        try {
+            $id = $request->id;
+            $edit = User::findOrFail($id);
+            $edit->update([
+                'dob' =>  $request->dob
+            ]);
             return response()->json([
                 'status' => true,
                 'data' => $edit,
