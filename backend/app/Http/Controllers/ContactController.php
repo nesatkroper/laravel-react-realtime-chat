@@ -6,27 +6,32 @@ use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use function PHPSTORM_META\type;
+
 class ContactController extends Controller
 {
     public function getContact($creator)
     {
         try {
-            // $contact = Contact::where('creator', '=', $creator)->with('member')->get();
             $find = Contact::where('creator', '=', $creator)
                 ->orWhere('member', '=', $creator)
                 ->get();
 
             $contact = null;
+            $type = null;
             if ($find[0]->creator == $creator) {
                 $contact = Contact::where('creator', $creator)->with('member')->get();
+                $type = 'member';
             } else {
                 $contact = Contact::where('member', $creator)->with('creator')->get();
+                $type = 'creator';
             }
 
 
             if ($contact) {
                 return response()->json([
                     'data' => $contact,
+                    'type' => $type,
                     'status' => true,
                     'message' => 'Contact get successfully'
                 ]);
@@ -46,10 +51,22 @@ class ContactController extends Controller
     public function getOnlyContact($creator, $member)
     {
         try {
-            $contact = Contact::where('creator', '=', $creator)->where('member', '=', $member)->with('users')->get();
-            if ($contact) {
+            $find = Contact::where('creator', '=', $creator)->where('member', '=', $member)->orWhere('member', '=', $creator)->where('creator', '=', $member)->get();
+
+            $contact = null;
+            $type = null;
+            if ($find[0]->creator == $creator) {
+                $contact = Contact::where('creator', '=', $creator)->where('member', '=', $member)->with('member')->get();
+                $type = 'member';
+            } else {
+                $contact = Contact::where('creator', '=', $member)->where('member', '=', $creator)->with('creator')->get();
+                $type = 'creator';
+            }
+
+            if ($find) {
                 return response()->json([
                     'data' => $contact,
+                    'type' => $type,
                     'status' => true,
                     'message' => 'Contact get successfully'
                 ]);

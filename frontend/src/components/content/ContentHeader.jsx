@@ -15,11 +15,18 @@ import { useSelector, useDispatch } from "react-redux";
 const ContentHeader = () => {
   const dispatch = useDispatch();
   const [select, setSelect] = useState(true);
-  const contact = useSelector((state) => state?.contact[0]);
-  const chater = useSelector((state) => state?.chater[0]);
+  const contact = useSelector((state) => state.contact?.data);
+  const type = useSelector((state) => state.contact?.type);
+  const chater = useSelector((state) => state.chater?.data[0]);
 
   useEffect(() => {
-    dispatch(getChater(contact?.member));
+    dispatch(
+      getChater(
+        type == "creator"
+          ? contact[0]?.creator[0]?.usr_id
+          : contact[0]?.member[0]?.usr_id
+      )
+    );
     setSelect(false);
   }, []);
   return (
@@ -32,25 +39,26 @@ const ContentHeader = () => {
             <DialogTrigger>
               <div className="flex">
                 <Avatar>
-                  {select ? (
-                    ""
-                  ) : (
-                    <AvatarImage
-                      src={
-                        localStorage.getItem("baseUrl") +
-                        "profile/" +
-                        chater?.users[0].photo
-                      }
-                    />
-                  )}
+                  {
+                    select ? "" : ""
+                    // <AvatarImage
+                    //   src={
+                    //     localStorage.getItem("baseUrl") +
+                    //     "profile/" +
+                    //     chater?.users[0]?.photo
+                    //   }
+                    // />
+                  }
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col ms-2 ">
                   <p className="font-bold text-sm">
-                    {select ? " " : chater?.users[0].name}
+                    {type == "creator"
+                      ? chater?.creator[0]?.name
+                      : chater?.member[0]?.name}
                   </p>
                   <p className="text-gray-600 text-xs">
-                    +855 {select ? " " : chater?.users[0].phone}
+                    {/* +855 {select ? " " : chater?.users[0]?.phone} */}
                   </p>
                 </div>
               </div>

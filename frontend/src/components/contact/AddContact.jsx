@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import {
@@ -42,7 +42,7 @@ export const AddContact = () => {
     }
   };
   return (
-    <React.Fragment>
+    <>
       <Dialog>
         <DialogTrigger>
           <Button className="px-2 shadow-xl">
@@ -101,6 +101,6 @@ export const AddContact = () => {
           </form>
         </DialogContent>
       </Dialog>
-    </React.Fragment>
+    </>
   );
 };

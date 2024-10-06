@@ -9,9 +9,11 @@ import { getMessage } from "@/app/reducer/messageSlice";
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contact = useSelector((state) => state?.contact);
+  const contact = useSelector((state) => state?.contact?.data);
+  const type = useSelector((state) => state?.contact?.type);
 
   const handleClick = (member) => {
+    console.log(member);
     dispatch(getChater(member));
     dispatch(getMessage(member));
   };
@@ -22,11 +24,17 @@ const ContactList = () => {
   return (
     <>
       <ScrollArea className="h-[86vh] w-full rounded-md p-1">
-        {contact?.map((contact) => (
+        {contact?.map((con) => (
           <Card
-            onClick={() => handleClick(contact.member)}
+            onClick={() =>
+              handleClick(
+                type == "creator"
+                  ? con?.creator[0]?.usr_id
+                  : con?.member[0]?.usr_id
+              )
+            }
             className="mt-1 cursor-pointer"
-            key={contact.con_id}
+            key={con.con_id}
           >
             <CardContent className="p-2">
               <div className="flex">
@@ -35,13 +43,19 @@ const ContactList = () => {
                     src={
                       localStorage.getItem("baseUrl") +
                       "profile/" +
-                      contact.users[0].photo
+                      (type == "creator")
+                        ? con?.creator[0]?.photo
+                        : con?.member[0]?.photo
                     }
                   />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col ms-2 font-bold">
-                  <p>{contact.users[0].name}</p>
+                  <p>
+                    {type == "creator"
+                      ? con?.creator[0]?.name
+                      : con?.member[0]?.name}
+                  </p>
                 </div>
               </div>
             </CardContent>

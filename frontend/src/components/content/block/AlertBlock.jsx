@@ -1,4 +1,3 @@
-import React from "react";
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -11,7 +10,7 @@ import {
 
 const AlertBlock = () => {
   return (
-    <React.Fragment>
+    <>
       <AlertDialogContent className="w-[300px]">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -25,7 +24,7 @@ const AlertBlock = () => {
           <AlertDialogAction>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
-    </React.Fragment>
+    </>
   );
 };
 

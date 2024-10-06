@@ -5,7 +5,7 @@ const creator = localStorage.getItem("id");
 
 export const getChater = createAsyncThunk("getChater", async (member) => {
   const response = await axiosInstance.get(`/contact/${creator}/${member}`);
-  return response.data.data;
+  return response.data;
 });
 
 const chaterSlice = createSlice({
